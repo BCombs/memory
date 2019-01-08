@@ -113,17 +113,13 @@ h1 {
 .modal {
   /* centering modal information @ https://stackoverflow.com/a/39636961 */
   display: none;
-  position: absolute;
-  align-content: center;
-  float: left;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  height: 60%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
   overflow: auto;
   background-color: #fff;
-  box-shadow: 0 0 5px 5px rgba(109, 109, 109, 0.4);
 }
 
 .modal-content {
@@ -133,7 +129,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .win {
@@ -170,6 +166,10 @@ h1 {
 
 .modal-button {
   border: none;
-  background: none;
+  color: #fff;
+  font-size: 1em;
+  padding: 0.8em;
+  background: #02ccba;
+  border-radius: 10px;
   cursor: pointer;
 }

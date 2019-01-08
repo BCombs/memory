@@ -26,7 +26,7 @@
 
       <span id="moves">0</span> Moves
 
-      <div class="restart">
+      <div class="restart" onClick="resetBoard()">
         <i class="fa fa-repeat"></i>
       </div>
     </section>
@@ -41,12 +41,8 @@
         <img class="trophy-img" src="img/trophy.svg">
         <p id="win-message">Congratulations! You won!</p>
       </div>
-      <div class="play-again">
-        <p id="play-again-message">Would you Like to play again?</p>
-        <div class=button-container center>
-          <button class="modal-button" id="yes-btn" onClick="resetBoard()"><img src="img/yes.png"></button>
-          <button class="modal-button" id="no-btn"><img src="img/no.png"></button>
-        </div>
+      <div class=button-container center>
+        <button class="modal-button" id="yes-btn" onClick="resetBoard()">Play Again!</button>
       </div>
     </div>
   </div>

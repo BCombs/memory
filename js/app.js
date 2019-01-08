@@ -136,7 +136,6 @@ function updateMoves() {
 function removeStar() {
   const starUl = document.querySelector('.stars');
   starUl.removeChild(starUl.children[0]);
-  console.log('Star children after removal: ', starUl.children);
 }
 
 // Reset the number of stars to 3
@@ -165,7 +164,7 @@ cardsInDeck.forEach(function(card) {
         updateMoves();
 
         // Check if we need to lower player star rating
-        if (numMoves == 12 || numMoves == 20) {
+        if (numMoves == 15 || numMoves == 22) {
           // Remove a star
           removeStar();
         }
