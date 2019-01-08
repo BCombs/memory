@@ -12,10 +12,6 @@ cards = ['fa-diamond', 'fa-diamond',
   'fa-bomb', 'fa-bomb'
 ];
 
-function addCardItem(card) {
-  return `<li class="card"><i class="fa ${card}"></i></li>`;
-}
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -52,6 +48,12 @@ function shuffle(array) {
 
 let openCards = [];
 let numMoves = 0;
+let numMatches = 0;
+const modal = document.querySelector('.modal');
+
+function addCardItem(card) {
+  return `<li class="card"><i class="fa ${card}"></i></li>`;
+}
 
 function initGame() {
   // Get a new array with addCardItem called on each element in cards
@@ -64,6 +66,7 @@ function initGame() {
 
   // Reset the number of moves to 0
   numMoves = 0;
+  numMatches = 0;
 }
 
 initGame();
@@ -96,6 +99,10 @@ function matchCards() {
   openCards[0].classList.add('match');
   openCards[1].classList.add('match');
   openCards = [];
+  numMatches++;
+  if (numMatches == 8) {
+    modal.style.display = 'block';
+  }
 }
 
 // If the cards do not match, clear openCards and hide them
@@ -109,10 +116,10 @@ function removeCards() {
 }
 
 // Get all of the cards
-const cardDeck = document.querySelectorAll('.card');
+const cardsInDeck = document.querySelectorAll('.card');
 
 // Add a click listener to each card
-cardDeck.forEach(function(card) {
+cardsInDeck.forEach(function(card) {
   card.addEventListener('click', function(e) {
     // If the card does not contain the classes open, show, or match; display it.
     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
