@@ -55,18 +55,25 @@ function addCardItem(card) {
   return `<li class="card"><i class="fa ${card}"></i></li>`;
 }
 
+// Resets all game data and hides the modal if it is showing
+function resetBoard() {
+  // Reset the number of moves to 0
+  numMoves = 0;
+  numMatches = 0;
+  updateMoves();
+  modal.style.display = 'none';
+}
+
 function initGame() {
-  // Get a new array with addCardItem called on each element in cards
   shuffledCards = shuffle(cards);
+  // Get a new array with addCardItem called on each element in cards array (map)
   const cardHTML = shuffledCards.map(function(card) {
     return addCardItem(card);
   });
   const deck = document.querySelector('.deck');
   deck.innerHTML = cardHTML.join('');
 
-  // Reset the number of moves to 0
-  numMoves = 0;
-  numMatches = 0;
+  resetBoard();
 }
 
 initGame();
@@ -115,6 +122,11 @@ function removeCards() {
   }, 1000);
 }
 
+// Update the moves counter on the screen
+function updateMoves() {
+  document.getElementById("moves").textContent = numMoves;
+}
+
 // Get all of the cards
 const cardsInDeck = document.querySelectorAll('.card');
 
@@ -128,7 +140,14 @@ cardsInDeck.forEach(function(card) {
       if (openCards.length == 2) {
         // Increase the number of moves by 1 and update
         numMoves++;
-        document.getElementById("moves").textContent = numMoves;
+        updateMoves();
+
+        // Check if we need to lower player star rating
+        if (numMoves == 12 || numMoves == 20) {
+          // Remove a star
+          const starUl = document.querySelector('.stars');
+          starUl.removeChild(starUl.children[0]);
+        }
 
         if (checkForMatch()) {
           matchCards();

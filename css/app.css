@@ -119,8 +119,8 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
-  height: 50%;
+  width: 40%;
+  height: 60%;
   overflow: auto;
   background-color: #fff;
   box-shadow: 0 0 5px 5px rgba(109, 109, 109, 0.4);
