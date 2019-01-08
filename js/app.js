@@ -55,13 +55,20 @@ function addCardItem(card) {
   return `<li class="card"><i class="fa ${card}"></i></li>`;
 }
 
+function addStarItem() {
+  return `<li><i class="fa fa-star"></i></li>`;
+}
+
 // Resets all game data and hides the modal if it is showing
 function resetBoard() {
   // Reset the number of moves to 0
   numMoves = 0;
   numMatches = 0;
   updateMoves();
+  resetStars();
   modal.style.display = 'none';
+
+  initGame();
 }
 
 function initGame() {
@@ -72,8 +79,6 @@ function initGame() {
   });
   const deck = document.querySelector('.deck');
   deck.innerHTML = cardHTML.join('');
-
-  resetBoard();
 }
 
 initGame();
@@ -127,6 +132,23 @@ function updateMoves() {
   document.getElementById("moves").textContent = numMoves;
 }
 
+// Removes a star
+function removeStar() {
+  const starUl = document.querySelector('.stars');
+  starUl.removeChild(starUl.children[0]);
+  console.log('Star children after removal: ', starUl.children);
+}
+
+// Reset the number of stars to 3
+function resetStars() {
+  const starUl = document.querySelector('.stars');
+  let starHTML = [];
+  for (let i = 0; i < 3; i++) {
+    starHTML.push(addStarItem());
+  }
+  starUl.innerHTML = starHTML.join('');
+}
+
 // Get all of the cards
 const cardsInDeck = document.querySelectorAll('.card');
 
@@ -145,8 +167,7 @@ cardsInDeck.forEach(function(card) {
         // Check if we need to lower player star rating
         if (numMoves == 12 || numMoves == 20) {
           // Remove a star
-          const starUl = document.querySelector('.stars');
-          starUl.removeChild(starUl.children[0]);
+          removeStar();
         }
 
         if (checkForMatch()) {
