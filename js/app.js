@@ -44,26 +44,31 @@ let openCards = [];
 // Displays a card
 function displayCard(card) {
   card.classList.add('open', 'show');
-  console.log('in displayCard() funtion');
 }
 
 // Adds the card to an array of opened cards
 function addToOpenList(card) {
   openCards.push(card);
-  console.log('in addToOpenList() funtion');
 }
 
 // Checks if two cards match
 function checkForMatch() {
-  // Test returning true and false
-  console.log('in checkForMatch(); returning false');
-  return false;
+  cardOne = openCards[0].children[0].classList;
+  cardTwo = openCards[1].children[0].classList;
+  if (cardOne.length !== cardTwo.length) {
+    return false;
+  }
+  for (let i = 0; i < cardOne.length; i++) {
+    if (cardOne[i] !== cardTwo[i]) return false;
+  }
+  return true;
 }
 
 // If the cards match, this function locks them open
 function matchCards() {
-  // TODO: Lock the cards in the open position (match class)
-  console.log('Returned true and now in matchCards() function');
+  openCards[0].classList.add('match');
+  openCards[1].classList.add('match');
+  openCards = [];
 }
 
 // If the cards do not match, clear openCards and hide them
@@ -74,9 +79,7 @@ function removeCards() {
     });
     openCards = [];
   }, 1000);
-  console.log('Returned false and now in removeCards() function');
 }
-
 
 // Add a click listener to each card
 cardDeck.forEach(function(card) {
@@ -86,7 +89,7 @@ cardDeck.forEach(function(card) {
       displayCard(card);
       addToOpenList(card);
       if (openCards.length == 2) {
-        if(checkForMatch()) {
+        if (checkForMatch()) {
           matchCards();
         } else {
           removeCards();
