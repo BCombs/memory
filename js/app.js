@@ -59,19 +59,11 @@ function addStarItem() {
   return `<li><i class="fa fa-star"></i></li>`;
 }
 
-// Resets all game data and hides the modal if it is showing
-function resetBoard() {
-  // Reset the number of moves to 0
+function initGame() {
   numMoves = 0;
   numMatches = 0;
-  updateMoves();
-  resetStars();
   modal.style.display = 'none';
 
-  initGame();
-}
-
-function initGame() {
   shuffledCards = shuffle(cards);
   // Get a new array with addCardItem called on each element in cards array (map)
   const cardHTML = shuffledCards.map(function(card) {
@@ -79,6 +71,9 @@ function initGame() {
   });
   const deck = document.querySelector('.deck');
   deck.innerHTML = cardHTML.join('');
+  addListeners();
+  addStars();
+  updateMoves();
 }
 
 initGame();
@@ -91,6 +86,15 @@ function displayCard(card) {
 // Adds the card to an array of opened cards
 function addToOpenList(card) {
   openCards.push(card);
+}
+
+function gameWin() {
+  // Get the game details
+  const starRating = document.querySelector('.stars').children.length;
+  const gameDetails = `You won the game in ${numMoves} moves and finished the game with a star rating of ${starRating}! Good Job!`;
+  const detailsMessage = document.getElementById('game-details');
+  detailsMessage.innerText = gameDetails;
+  modal.style.display = 'block';
 }
 
 // Checks if two cards match
@@ -113,7 +117,7 @@ function matchCards() {
   openCards = [];
   numMatches++;
   if (numMatches == 8) {
-    modal.style.display = 'block';
+    gameWin();
   }
 }
 
@@ -139,7 +143,7 @@ function removeStar() {
 }
 
 // Reset the number of stars to 3
-function resetStars() {
+function addStars() {
   const starUl = document.querySelector('.stars');
   let starHTML = [];
   for (let i = 0; i < 3; i++) {
@@ -148,33 +152,35 @@ function resetStars() {
   starUl.innerHTML = starHTML.join('');
 }
 
-// Get all of the cards
-const cardsInDeck = document.querySelectorAll('.card');
+// Add click listeners to the cards
+function addListeners() {
+  // Get all of the cards
+  const cardsInDeck = document.querySelectorAll('.card');
+  // Add a click listener to each card
+  cardsInDeck.forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      // If the card does not contain the classes open, show, or match; display it.
+      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+        displayCard(card);
+        addToOpenList(card);
+        if (openCards.length == 2) {
+          // Increase the number of moves by 1 and update
+          numMoves++;
+          updateMoves();
 
-// Add a click listener to each card
-cardsInDeck.forEach(function(card) {
-  card.addEventListener('click', function(e) {
-    // If the card does not contain the classes open, show, or match; display it.
-    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
-      displayCard(card);
-      addToOpenList(card);
-      if (openCards.length == 2) {
-        // Increase the number of moves by 1 and update
-        numMoves++;
-        updateMoves();
+          // Check if we need to lower player star rating
+          if (numMoves == 15 || numMoves == 22) {
+            // Remove a star
+            removeStar();
+          }
 
-        // Check if we need to lower player star rating
-        if (numMoves == 15 || numMoves == 22) {
-          // Remove a star
-          removeStar();
-        }
-
-        if (checkForMatch()) {
-          matchCards();
-        } else {
-          removeCards();
+          if (checkForMatch()) {
+            matchCards();
+          } else {
+            removeCards();
+          }
         }
       }
-    }
+    });
   });
-});
+}

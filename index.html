@@ -19,14 +19,11 @@
 
     <section class="score-panel">
       <ul class="stars">
-        <li><i class="fa fa-star"></i></li>
-        <li><i class="fa fa-star"></i></li>
-        <li><i class="fa fa-star"></i></li>
       </ul>
 
       <span id="moves">0</span> Moves
 
-      <div class="restart" onClick="resetBoard()">
+      <div class="restart" onClick="initGame()">
         <i class="fa fa-repeat"></i>
       </div>
     </section>
@@ -40,9 +37,10 @@
       <div class="win">
         <img class="trophy-img" src="img/trophy.svg">
         <p id="win-message">Congratulations! You won!</p>
+        <p id="game-details"></p>
       </div>
       <div class=button-container center>
-        <button class="modal-button" id="yes-btn" onClick="resetBoard()">Play Again!</button>
+        <button class="modal-button" id="yes-btn" onClick="initGame()">Play Again!</button>
       </div>
     </div>
   </div>
