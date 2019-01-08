@@ -38,8 +38,9 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-const cardDeck = document.querySelectorAll(".card");
+const cardDeck = document.querySelectorAll('.card');
 let openCards = [];
+let numMoves = 0;
 
 // Displays a card
 function displayCard(card) {
@@ -89,6 +90,10 @@ cardDeck.forEach(function(card) {
       displayCard(card);
       addToOpenList(card);
       if (openCards.length == 2) {
+        // Increase the number of moves by 1 and update
+        numMoves++;
+        document.getElementById("moves").textContent = numMoves;
+
         if (checkForMatch()) {
           matchCards();
         } else {
