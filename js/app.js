@@ -110,6 +110,7 @@ function incrementTime() {
   timer();
 }
 
+// Timer help found at https://jsfiddle.net/Daniel_Hug/pvk6p/
 function timer() {
   tmr = setTimeout(incrementTime, 1000);
 }
