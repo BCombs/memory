@@ -2,14 +2,10 @@
  * Create a list that holds all of your cards
  */
 
-cards = ['fa-diamond', 'fa-diamond',
-  'fa-paper-plane-o', 'fa-paper-plane-o',
-  'fa-anchor', 'fa-anchor',
-  'fa-bolt', 'fa-bolt',
-  'fa-cube', 'fa-cube',
-  'fa-leaf', 'fa-leaf',
-  'fa-bicycle', 'fa-bicycle',
-  'fa-bomb', 'fa-bomb'
+cards = ['fa-diamond', 'fa-paper-plane-o',
+  'fa-anchor', 'fa-bolt',
+  'fa-cube', 'fa-leaf',
+  'fa-bicycle', 'fa-bomb',
 ];
 
 /*
@@ -21,7 +17,7 @@ cards = ['fa-diamond', 'fa-diamond',
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-  var currentIndex = array.length,
+  let currentIndex = array.length,
     temporaryValue, randomIndex;
 
   while (currentIndex !== 0) {
@@ -76,9 +72,9 @@ function initGame() {
   numMatches = 0;
   modal.style.display = 'none';
 
-  shuffledCards = shuffle(cards);
+  shuffledCards = shuffle(cards.concat(cards));
   // Get a new array with addCardItem called on each element in cards array (map)
-  const cardHTML = shuffledCards.map(function(card) {
+  const cardHTML = shuffledCards.map((card) => {
     return addCardItem(card);
   });
   const deck = document.querySelector('.deck');
@@ -203,8 +199,8 @@ function addListeners() {
   // Get all of the cards
   const cardsInDeck = document.querySelectorAll('.card');
   // Add a click listener to each card
-  cardsInDeck.forEach(function(card) {
-    card.addEventListener('click', function(e) {
+  cardsInDeck.forEach((card) => {
+    card.addEventListener('click', (e) => {
       // If the card does not contain the classes open, show, or match; display it.
       if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
         displayCard(card);
