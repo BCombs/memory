@@ -50,6 +50,11 @@ let openCards = [];
 let numMoves = 0;
 let numMatches = 0;
 const modal = document.querySelector('.modal');
+const timerDisplay = document.getElementById('timer');
+let tmr;
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
 
 function addCardItem(card) {
   return `<li class="card"><i class="fa ${card}"></i></li>`;
@@ -60,6 +65,13 @@ function addStarItem() {
 }
 
 function initGame() {
+  // Make sure the timer is stopped
+  stopTimer();
+
+  // Reset everything to default
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
   numMoves = 0;
   numMatches = 0;
   modal.style.display = 'none';
@@ -74,9 +86,37 @@ function initGame() {
   addListeners();
   addStars();
   updateMoves();
+  timer();
 }
 
 initGame();
+
+function incrementTime() {
+  seconds++;
+  if (seconds == 60) {
+    seconds = 0;
+    minutes++;
+    if (minutes == 60) {
+      minutes = 0;
+      hours++;
+    }
+  }
+  //Are the hours greater than 9? display hours, else add a zero in front of the hours
+  let hoursToSet = hours > 9 ? hours : '0' + hours;
+  let minutesToSet = minutes > 9 ? minutes : '0' + minutes;
+  let secondsToSet = seconds > 9 ? seconds : '0' + seconds;
+  timerDisplay.innerText = `${hoursToSet}:${minutesToSet}:${secondsToSet}`;
+
+  timer();
+}
+
+function timer() {
+  tmr = setTimeout(incrementTime, 1000);
+}
+
+function stopTimer() {
+  clearTimeout(tmr);
+}
 
 // Displays a card
 function displayCard(card) {
@@ -89,9 +129,14 @@ function addToOpenList(card) {
 }
 
 function gameWin() {
+  stopTimer();
   // Get the game details
-  const starRating = document.querySelector('.stars').children.length;
-  const gameDetails = `You won the game in ${numMoves} moves and finished the game with a star rating of ${starRating}! Good Job!`;
+  const hoursToSet = hours > 9 ? hours : '0' + hours;
+  const minutesToSet = minutes > 9 ? minutes : '0' + minutes;
+  const secondsToSet = seconds > 9 ? seconds : '0' + seconds;
+  const time = `${hoursToSet}:${minutesToSet}:${secondsToSet}`
+  const starRating = document.querySelectorAll('.fa-star').length;
+  const gameDetails = `You won the game in ${numMoves} moves and finished the game in ${time} with a star rating of ${starRating}!`;
   const detailsMessage = document.getElementById('game-details');
   detailsMessage.innerText = gameDetails;
   modal.style.display = 'block';

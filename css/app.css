@@ -85,6 +85,8 @@ h1 {
  * Styles for the Score Panel
  */
 .score-panel {
+  display: flex;
+  justify-content: space-between;
   text-align: left;
   width: 345px;
   margin-bottom: 10px;
@@ -146,6 +148,10 @@ h1 {
 
 #win-message {
   font-size: 1.8em;
+}
+
+#game-details {
+  font-size: 1.2em;
 }
 
 .play-again {
